@@ -1,0 +1,8 @@
+version: 0.1
+endpoints:
+  - name: PCB API
+    port: 8081
+    type: REST
+    networkVisibility: Public
+    context: /
+    schemaFilePath: openapi.yaml
