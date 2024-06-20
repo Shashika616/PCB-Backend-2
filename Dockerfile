@@ -1,9 +1,9 @@
 FROM eclipse-temurin:17-jdk-jammy AS build
-
+WORKDIR /usr/app
 
 # Package stage
 FROM eclipse-temurin:17-jre-jammy
-COPY --from=build /usr/app/target/pcb-0.0.1-SNAPSHOT.jar /usr/app/choreotest/pcb-0.0.1-SNAPSHOT.jar
+COPY /target/pcb-0.0.1-SNAPSHOT.jar /usr/app/choreotest/pcb-0.0.1-SNAPSHOT.jar
 
 RUN mkdir /tmp/tomcat static
 RUN chmod -R 777 /tmp
