@@ -1,5 +1,6 @@
 package com.exampleone.pcb;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,17 +10,27 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("api/designers")
 public class DesignerController {
 
     @Autowired
+
     private PCBService pcbService;
+
+    private static final Logger logger = LoggerFactory.getLogger(DesignerController.class);
 
     @GetMapping("/pcbs")
     public List<PCB> getallPCB(){
-        return pcbService.allPCB();
+         try {
+             return pcbService.allPCB();
+         }catch (Exception e){
+             logger.error("Error occurred while fetching PCBs", e);
+             return List.of();
+         }
     }
 
     @PostMapping("/pcbs")
