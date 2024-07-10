@@ -4,5 +4,5 @@ endpoints:
     port: 8081
     type: REST
     networkVisibility: Public
-    context: /pcb-management/pcbservice/v1.0
+    context: pcb-management/pcb-service-2/v1.0
     schemaFilePath: openapi.yaml
