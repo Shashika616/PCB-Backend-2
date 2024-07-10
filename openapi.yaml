@@ -3,8 +3,8 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-- url: http://localhost:8081
-  description: Generated server url
+- url: https://2bf3cacc-4d25-40ba-8fba-b400401187f5-prod.e1-us-east-azure.choreoapis.dev/pcb-management/pcbservice/v1.0
+  description: Choreo server url
 paths:
   /api/logistics/pcbs/{pcbId}/customers/{customerId}:
     get:
