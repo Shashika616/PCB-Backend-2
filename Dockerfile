@@ -1,21 +1,37 @@
-FROM eclipse-temurin:17-jdk-jammy AS build
-WORKDIR /usr/app
+# Docker multi-stage build
 
-# Package stage
-FROM eclipse-temurin:17-jre-jammy
-COPY /target/pcb-0.0.1-SNAPSHOT.jar /usr/app/choreotest/pcb-0.0.1-SNAPSHOT.jar
+# 1. Building the App with Maven
+FROM maven:3.8.7-eclipse-temurin-19-alpine
 
-RUN mkdir /tmp/tomcat static
-RUN chmod -R 777 /tmp
-RUN chmod -R 777 /usr/app/choreotest/pcb-0.0.1-SNAPSHOT.jar
-RUN addgroup --system --gid 1001 wso2
-RUN adduser --system --uid 10014 wso2
-# Set a non-root user
+ADD . /java-springboot
+WORKDIR /java-springboot
+
+# Just echo so we can see, if everything is there :)
+RUN ls -l
+
+# Run Maven build
+RUN mvn clean install
+
+# 2. Just using the build artifact and then removing the build-container
+FROM openjdk:19-alpine
+
+# https://security.alpinelinux.org/vuln/CVE-2021-46848
+RUN apk add --upgrade libtasn1-progs
+
+# https://security.alpinelinux.org/vuln/CVE-2022-37434
+RUN apk update && apk upgrade zlib
+
+
+# Create a new user with UID 10014
+RUN addgroup -g 10014 choreo && \
+    adduser  --disabled-password  --no-create-home --uid 10014 --ingroup choreo choreouser
+
+VOLUME /tmp
+
 USER 10014
 
-ENTRYPOINT ["java","-jar","/usr/app/choreotest/pcb-0.0.1-SNAPSHOT.jar"]
-RUN echo `ls`
-EXPOSE 8081
+# Add Spring Boot app.jar to Container
+COPY --from=0 "/java-springboot/target/pcb-*.jar" app.jar
 
-# BUILD WITH : docker build -t certifier/rest-app:<tag> .
-# RUN WITH : docker run -d -p 8080:8080 certifier/rest-app:<tag>
+# Fire up our Spring Boot app by default
+CMD [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
