@@ -3,7 +3,7 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-- url: https://2bf3cacc-4d25-40ba-8fba-b400401187f5-prod.e1-us-east-azure.choreoapis.dev/pcb-management/pcb-service-2/v1.0
+- url: http://localhost:8081
   description: Choreo server url
 paths:
   /api/logistics/pcbs/{pcbId}/customers/{customerId}:
