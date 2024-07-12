@@ -15,7 +15,7 @@ USER 10014
 
 ENTRYPOINT ["java","-jar","/usr/app/choreotest/pcb-0.0.1-SNAPSHOT.jar"]
 RUN echo `ls`
-EXPOSE 8081
+EXPOSE 8080
 
 # BUILD WITH : docker build -t certifier/rest-app:<tag> .
 # RUN WITH : docker run -d -p 8080:8080 certifier/rest-app:<tag>
