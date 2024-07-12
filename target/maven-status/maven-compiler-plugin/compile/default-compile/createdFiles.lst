@@ -1,1 +1,12 @@
+com\exampleone\pcb\Customer.class
+com\exampleone\pcb\EngineeringParameters.class
+com\exampleone\pcb\Logistics.class
+com\exampleone\pcb\PCBRepository.class
+com\exampleone\pcb\DesignerController.class
+com\exampleone\pcb\PCBController.class
+com\exampleone\pcb\PCB.class
 com\exampleone\pcb\PcbApplication.class
+com\exampleone\pcb\PCBService.class
+com\exampleone\pcb\LogisticController.class
+com\exampleone\pcb\EngineerController.class
+com\exampleone\pcb\WebConfig.class
